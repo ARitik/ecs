@@ -18,7 +18,7 @@ User {
 }
 ```
 **Todo List**
-- [x] Setup Tailwind w/ React
+- [x] Setup Tailwind w/ Vue 
 - [ ] Build Login Page
 - [ ] Build Registration Page
 - [ ] Display `UserData` on Login

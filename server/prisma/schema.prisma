@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  @@map(name: "users")
+  id Int @default(autoincrement()) @id
+  uid String @default(uuid()) @unique
+  email String @unique
+  name String?
+  role UserRole @default(USER)
+  createdAt DateTime @default(now()) @map("created_at") 
+  updatedAt DateTime @updatedAt @map("updated_at")
+  orders Order[]
+}
+
+model Product {
+  @@map(name: "products")
+  id Int @default(autoincrement()) @id
+  pid String @default(uuid()) @unique
+  name String
+  description String
+  image String
+  stock Boolean 
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+model Order {
+  @@map(name: "orders")
+  id Int @default(autoincrement()) @id
+  oid String @default(uuid()) @unique
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  products Product[]
+  status OrderStatus @default(RECIEVED)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum OrderStatus {
+  RECIEVED
+  DISPATCHED
+  DELIVERED
+  CANCELLED
+}
