@@ -3,9 +3,10 @@ import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
 import bcrypt from 'bcrypt';
 import { body, validationResult } from 'express-validator';
-import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+import prisma from '../middleware/prisma';
+
+import auth from '../middleware/auth';
 
 const register = async (req: Request, res: Response) => {
 	const { name, email, password } = req.body; // Pull data from Request Body
@@ -83,6 +84,10 @@ const login = async (req: Request, res: Response) => {
 	}
 };
 
+const me = (_: Request, res: Response) => {
+	return res.json(res.locals.user);
+};
+
 const router = Router(); // Auth Router Object Initialization
 
 router.post(
@@ -96,5 +101,7 @@ router.post(
 	[body('email').isEmail(), body('password').isLength({ min: 5 })], //express-validator validation checks
 	login
 );
+
+router.get('/me', auth, me);
 
 export default router; //Default export AuthRouter

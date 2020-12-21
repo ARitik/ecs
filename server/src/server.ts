@@ -13,7 +13,6 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(morgan('dev'));
-
 app.use(cookieParser());
 
 app.get('/', (_, res: Response) => res.send('Hello World'));
