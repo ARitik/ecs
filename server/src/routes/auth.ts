@@ -88,6 +88,20 @@ const me = (_: Request, res: Response) => {
 	return res.json(res.locals.user);
 };
 
+const logout = (_: Request, res: Response) => {
+	res.set(
+		'Set-Cookie',
+		cookie.serialize('token', '', {
+			httpOnly: true,
+			secure: process.env.NODE_ENV === 'production',
+			sameSite: 'strict',
+			expires: new Date(0),
+			path: '/',
+		})
+	);
+	return res.status(200).json({ success: 'Logged Out!' });
+};
+
 const router = Router(); // Auth Router Object Initialization
 
 router.post(
@@ -103,5 +117,6 @@ router.post(
 );
 
 router.get('/me', auth, me);
+router.get('/logout', auth, logout);
 
 export default router; //Default export AuthRouter

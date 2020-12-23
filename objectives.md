@@ -2,7 +2,7 @@
 
 1. React + Tailwind
 2. NodeJS (Express)
-3. GraphQL w/ Prisma
+3. Prisma ORM
 4. PostgreSQL 
 
 #### Phase (1) User Login and Registration
@@ -18,8 +18,7 @@ User {
 }
 ```
 **Todo List**
-- [x] Setup Tailwind w/ Vue 
+- [x] Setup Tailwind w/ React 
 - [ ] Build Login Page
 - [ ] Build Registration Page
 - [ ] Display `UserData` on Login
-- [ ] Setup GraphQL w/ Prisma
