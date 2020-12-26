@@ -13,7 +13,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 				email,
 			},
 		});
-		if (!user) throw new Error('Access Denied');
+		if (!user) throw new Error('User does not exist');
 		res.locals.user = user;
 		return next();
 	} catch (error) {
