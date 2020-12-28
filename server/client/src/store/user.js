@@ -60,7 +60,7 @@ export const register = ({ email, password, name }) => async dispatch => {
 			name,
 		});
 		if (response) {
-			dispatch(loginSuccess(response.data));
+			dispatch(login({ email, password }));
 		}
 	} catch (error) {
 		console.error(error.message);

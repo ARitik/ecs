@@ -11,7 +11,7 @@ function Login() {
 	const dispatch = useDispatch();
 
 	return (
-		<div className='h-screen w-screen flex justify-center items-center bg-blue-200'>
+		<div className='h-screen w-screen flex justify-center items-center bg-white'>
 			<Formik
 				initialValues={{ email: '', password: '' }}
 				onSubmit={values => dispatch(login(values))}
@@ -29,7 +29,7 @@ function Login() {
 							<Field
 								name='email'
 								type='email'
-								className='bg-white shadow-md text-grey-200 font-semibold rounded w-full py-3 px-4 mb-3'
+								className='bg-white border border-gray-500 text-grey-200 font-semibold rounded w-full py-3 px-4 mb-3'
 							/>
 						</div>
 						<div className='w-full space-y-2'>
@@ -42,7 +42,7 @@ function Login() {
 							<Field
 								name='password'
 								type='password'
-								className='bg-white shadow-md text-grey-200 font-semibold rounded w-full py-3 px-4 mb-3'
+								className='bg-white border border-gray-500 text-grey-200 font-semibold rounded w-full py-3 px-4 mb-3'
 							/>
 						</div>
 						<button
