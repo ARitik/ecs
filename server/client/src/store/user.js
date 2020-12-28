@@ -52,5 +52,19 @@ export const logout = () => async dispatch => {
 	}
 };
 
+export const register = ({ email, password, name }) => async dispatch => {
+	try {
+		const response = await axios.post('/api/auth/register', {
+			email,
+			password,
+			name,
+		});
+		if (response) {
+			dispatch(loginSuccess(response.data));
+		}
+	} catch (error) {
+		console.error(error.message);
+	}
+};
+
 // export const selectUser = state => state.user;
-// export const selectLoggedIn = state => state.loggedIn;
