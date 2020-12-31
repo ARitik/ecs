@@ -8,8 +8,22 @@ import prisma from '../middleware/prisma';
 
 import auth from '../middleware/auth';
 
+const mapErrors = (errors: Object[]) => {
+	return errors.reduce((mappedErrors, error: any) => {
+		mappedErrors[error.param] = error.msg;
+		return mappedErrors;
+	}, {});
+};
+
 const register = async (req: Request, res: Response) => {
 	const { name, email, password } = req.body; // Pull data from Request Body
+
+	//Validation Result
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json(mapErrors(errors.array()));
+	}
+
 	try {
 		// userEmail Check
 		const userEmail = await prisma.user.findUnique({
@@ -19,15 +33,8 @@ const register = async (req: Request, res: Response) => {
 		});
 		// Prisma findUnique to check emailExistCondition
 		if (userEmail)
-			return res.status(400).json({ error: 'Email Already Exists' });
+			return res.status(400).json({ email: 'Email Already Exists' });
 		// Return if Email Exist
-
-		//Validation Result
-		const errors: any = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(400).json(errors);
-		}
-		//Return Validation Result
 
 		const hashedPassword = await bcrypt.hash(password, 6);
 
@@ -49,20 +56,26 @@ const register = async (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
 	const { email, password } = req.body;
+
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json(mapErrors(errors.array()));
+	}
+
 	try {
 		const user = await prisma.user.findUnique({
 			where: {
 				email,
 			},
 		});
-		if (!user) return res.status(404).json({ error: 'Invalid Credentials' });
+		if (!user) return res.status(404).json({ email: 'User does not exist.' });
 
 		const passwordMatches: boolean = await bcrypt.compare(
 			password,
 			user.password
 		);
 		if (!passwordMatches) {
-			return res.status(401).json({ error: 'Invalid Credentials' });
+			return res.status(401).json({ password: 'Invalid Credentials' });
 		}
 
 		const token = jwt.sign({ email }, process.env.JWT_SECRET);
@@ -106,13 +119,25 @@ const router = Router(); // Auth Router Object Initialization
 
 router.post(
 	'/register',
-	[body('email').isEmail(), body('password').isLength({ min: 5 })], //express-validator validation checks
+	[
+		body('email').isEmail().withMessage('Must be a valid Email.').trim(),
+		body('password')
+			.isLength({ min: 5 })
+			.withMessage('Must be atleast 5 characters long'),
+		body('name')
+			.isLength({ min: 5 })
+			.withMessage('Must be atleast 5 characters long.')
+			.trim(),
+	], //express-validator validation checks
 	register
 );
 
 router.post(
 	'/login',
-	[body('email').isEmail(), body('password').isLength({ min: 5 })], //express-validator validation checks
+	[
+		body('email').isEmail().withMessage('Must be a valid Email.').trim(),
+		body('password').notEmpty().withMessage('Field cannot be empty.'),
+	], //express-validator validation checks
 	login
 );
 

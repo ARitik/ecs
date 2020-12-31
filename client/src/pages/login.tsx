@@ -2,11 +2,25 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import InputGroup from '../components/InputGroup';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 export default function login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState<any>({});
+
+	const router = useRouter();
+
+	const handleSubmit = async e => {
+		e.preventDefault();
+		try {
+			await axios.post('/auth/login', { email, password });
+			// router.push('/');
+		} catch (err) {
+			setError(err.response.data);
+		}
+	};
 
 	return (
 		<div className='flex flex-col items-center justify-center py-6 bg-white'>
@@ -15,7 +29,10 @@ export default function login() {
 				BIBLIO
 			</h1>
 			{/* Login Form */}
-			<form className='flex flex-col items-start px-6 py-4 mb-4 border w-80'>
+			<form
+				className='flex flex-col items-start px-6 py-4 mb-4 border w-80'
+				onSubmit={handleSubmit}
+			>
 				<h1 className='mb-6 text-xl'>Sign-In</h1>
 				<InputGroup
 					error={error.email}

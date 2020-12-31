@@ -2,6 +2,11 @@ import App from 'next/app';
 import type { AppProps /*, AppContext */ } from 'next/app';
 import '../styles/globals.css';
 
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.withCredentials = true;
+
 function MyApp({ Component, pageProps }: AppProps) {
 	return <Component {...pageProps} />;
 }
