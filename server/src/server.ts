@@ -3,8 +3,8 @@ import { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-// import cors from 'cors';
-import path from 'path';
+import cors from 'cors';
+// import path from 'path';
 import authRoutes from './routes/auth';
 
 dotenv.config();
@@ -15,8 +15,15 @@ const PORT = process.env.PORT;
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(
+	cors({
+		credentials: true,
+		origin: process.env.ORIGIN,
+		optionsSuccessStatus: 200,
+	})
+);
 
-app.use(express.static(path.join(__dirname, '/client/build')));
+// app.use(express.static(path.join(__dirname, '/client/build')));
 
 // app.use(function (_: Request, res: Response, next: NextFunction) {
 // 	// Website you wish to allow to connect
@@ -41,11 +48,9 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 // 	next();
 // });
 
-// app.use(cors);
-
-app.get('/', (_: Request, res: Response) => {
-	res.sendFile(path.join(__dirname, '/client/build/index.html'));
-});
+// app.get('/', (_: Request, res: Response) => {
+// 	res.sendFile(path.join(__dirname, '/client/build/index.html'));
+// });
 
 app.get('/', (_, res: Response) => res.send('Hello World'));
 app.use('/api/auth', authRoutes);
