@@ -8,6 +8,7 @@ import axios from 'axios';
 export default function login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [name, setName] = useState('');
 	const [error, setError] = useState<any>({});
 
 	const router = useRouter();
@@ -15,7 +16,7 @@ export default function login() {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		try {
-			await axios.post('/auth/login', { email, password });
+			await axios.post('/auth/register', { email, password, name });
 			router.push('/');
 		} catch (err) {
 			setError(err.response.data);
@@ -33,7 +34,15 @@ export default function login() {
 				className='flex flex-col items-start px-6 py-4 mb-4 border w-80'
 				onSubmit={handleSubmit}
 			>
-				<h1 className='mb-6 text-xl'>Sign-In</h1>
+				<h1 className='mb-6 text-xl'>Sign Up</h1>
+				<InputGroup
+					error={error.password}
+					type='text'
+					placeholder='Name'
+					className='w-full mb-4'
+					value={name}
+					setValue={setName}
+				/>
 				<InputGroup
 					error={error.email}
 					type='email'
@@ -52,7 +61,7 @@ export default function login() {
 				/>
 
 				<button className='w-full h-8 py-2 mb-3 text-xs font-medium text-white bg-yellow-500 hover:bg-yellow-400'>
-					Continue
+					Sign Up
 				</button>
 				<p className='mb-4 text-xs'>
 					By continuing , you agree to our{' '}
@@ -61,11 +70,13 @@ export default function login() {
 					<span className='text-blue-500 cursor-pointer'>Privacy Policy</span>.
 				</p>
 			</form>
-			<small className='mb-2 text-xs text-gray-500'>New to Biblio?</small>
+			<small className='mb-2 text-xs text-gray-500'>
+				Already have an account?
+			</small>
 			<div className='mb-4 w-80'>
-				<Link href='/register'>
+				<Link href='/login'>
 					<a className='flex items-center justify-center py-2 text-xs font-semibold text-gray-800 bg-gray-200 border border-gray-500 hover:bg-gray-100'>
-						Create your Biblio Account
+						Login to Biblio
 					</a>
 				</Link>
 			</div>
