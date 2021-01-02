@@ -1,13 +1,14 @@
 import Head from 'next/head';
+import Navbar from '../components/Navbar';
 
 export default function Home() {
 	return (
-		<div className='w-screen h-screen bg-gray-100'>
+		<div className='w-screen h-screen'>
 			<Head>
 				<title>Create Next App</title>
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<div className='w-40 h-40 bg-red-500'></div>
+			<Navbar />
 		</div>
 	);
 }

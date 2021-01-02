@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import InputGroup from '../components/InputGroup';
+import Logo from '../components/Logo';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
@@ -25,9 +26,9 @@ export default function login() {
 	return (
 		<div className='flex flex-col items-center justify-center py-6 bg-white'>
 			{/* Logo */}
-			<h1 className='mb-4 text-2xl font-semibold tracking-widest text-gray-600 uppercase'>
-				BIBLIO
-			</h1>
+			<div className='mb-4'>
+				<Logo />
+			</div>
 			{/* Login Form */}
 			<form
 				className='flex flex-col items-start px-6 py-4 mb-4 border w-80'
