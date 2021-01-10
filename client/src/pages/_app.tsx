@@ -3,12 +3,17 @@ import type { AppProps /*, AppContext */ } from 'next/app';
 import '../styles/globals.css';
 
 import axios from 'axios';
+import { AuthProvider } from '../context/auth';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }: AppProps) {
-	return <Component {...pageProps} />;
+	return (
+		<AuthProvider>
+			<Component {...pageProps} />
+		</AuthProvider>
+	);
 }
 
 // Only uncomment this method if you have blocking data requirements for

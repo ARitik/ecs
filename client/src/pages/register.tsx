@@ -62,7 +62,7 @@ export default function login() {
 					setValue={setPassword}
 				/>
 
-				<button className='w-full h-8 py-2 mb-3 text-xs font-medium text-white bg-yellow-500 hover:bg-yellow-400'>
+				<button className='w-full h-8 py-2 mb-3 text-xs font-medium text-white bg-gray-700 hover:bg-gray-600'>
 					Sign Up
 				</button>
 				<p className='mb-4 text-xs'>

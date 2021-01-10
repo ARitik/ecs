@@ -19,14 +19,16 @@ const Navbar: React.FC = () => {
 					</div>
 				</div>
 				{/* Cart + Login */}
-				<div className='flex items-center space-x-8'>
-					<div className='flex space-x-2'>
+				<div className='flex items-center'>
+					{/* <div className='flex'>
 						<i className='fas fa-shopping-cart text-gray-50'></i>
-						<h2 className='text-xs text-gray-50'>Shopping Cart</h2>
-					</div>
-					<button className='px-4 py-2 text-xs border border-gray-500 rounded text-gray-50'>
+						<h2 className='hidden text-xs text-gray-50 md:inline'>
+							Shopping Cart
+						</h2>
+					</div> */}
+					{/* <button className='px-4 py-2 text-xs border border-gray-500 rounded text-gray-50'>
 						Login
-					</button>
+					</button> */}
 				</div>
 			</div>
 			<div className='flex flex-col justify-around h-full px-4 border bg-gray-50'>
@@ -40,6 +42,8 @@ const Navbar: React.FC = () => {
 					<li>Home</li>
 					<li>About</li>
 					<li>Contact</li>
+					<li>My Cart</li>
+					<li>Logout</li>
 				</ul>
 			</div>
 		</nav>

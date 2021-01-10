@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 // import path from 'path';
 import authRoutes from './routes/auth';
+import productRoutes from './routes/products';
 
 dotenv.config();
 
@@ -54,6 +55,7 @@ app.use(
 
 app.get('/', (_, res: Response) => res.send('Hello World'));
 app.use('/api/auth', authRoutes);
+app.use('/api', productRoutes);
 
 app.listen(PORT || 5000, () => {
 	console.log(`Server running at http://localhost:${PORT}`);

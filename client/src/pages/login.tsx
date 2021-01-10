@@ -5,18 +5,22 @@ import InputGroup from '../components/InputGroup';
 import Logo from '../components/Logo';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useAuthDispatch } from '../context/auth';
 
 export default function login() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [error, setError] = useState<any>({});
 
+	const dispatch = useAuthDispatch();
+
 	const router = useRouter();
 
 	const handleSubmit = async e => {
 		e.preventDefault();
 		try {
-			await axios.post('/auth/login', { email, password });
+			const res = await axios.post('/auth/login', { email, password });
+			dispatch({ type: 'LOGIN', payload: res.data });
 			router.push('/');
 		} catch (err) {
 			setError(err.response.data);
@@ -52,7 +56,7 @@ export default function login() {
 					setValue={setPassword}
 				/>
 
-				<button className='w-full h-8 py-2 mb-3 text-xs font-medium text-white bg-yellow-500 hover:bg-yellow-400'>
+				<button className='w-full h-8 py-2 mb-3 text-xs font-medium text-white bg-gray-700 rounded hover:bg-gray-600'>
 					Continue
 				</button>
 				<p className='mb-4 text-xs'>
