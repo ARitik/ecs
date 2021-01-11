@@ -2,6 +2,7 @@ import classNames from 'classnames';
 
 interface InputGroupProps {
 	className?: string;
+	name?: string;
 	type: string;
 	placeholder?: string;
 	error: string | undefined;

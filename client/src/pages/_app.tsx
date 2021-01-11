@@ -1,6 +1,9 @@
-import App from 'next/app';
 import type { AppProps /*, AppContext */ } from 'next/app';
 import '../styles/globals.css';
+
+import { useRouter } from 'next/router';
+
+import Navbar from '../components/Navbar';
 
 import axios from 'axios';
 import { AuthProvider } from '../context/auth';
@@ -9,8 +12,12 @@ axios.defaults.baseURL = 'http://localhost:5000/api';
 axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }: AppProps) {
+	const { pathname } = useRouter();
+	const authRoutes = ['/login', '/register'];
+	const authRoute = authRoutes.includes(pathname);
 	return (
 		<AuthProvider>
+			{!authRoute && <Navbar />}
 			<Component {...pageProps} />
 		</AuthProvider>
 	);

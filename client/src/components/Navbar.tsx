@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
 	return (
 		<nav className='flex flex-col pt-2 border rounded'>
 			{/* Navbar Main */}
-			<div className='flex flex-row items-center justify-between h-16 px-4 md:px-20'>
+			<div className='flex flex-row items-center justify-between h-16 px-4 md:px-12'>
 				<div className='flex flex-row items-center space-x-4'>
 					<h1 className='text-sm font-bold tracking-widest text-gray-600 uppercase'>
 						Biblio
