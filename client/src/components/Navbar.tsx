@@ -1,12 +1,30 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useAuthState, useAuthDispatch } from '../context/auth';
 import classNames from 'classnames';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const Navbar: React.FC = () => {
+	const router = useRouter();
+
 	const [toggle, setToggle] = useState(true);
 	const dispatch = useAuthDispatch();
 	const { authenticated, user } = useAuthState();
+
+	const handleAuth = async e => {
+		switch (authenticated) {
+			case true:
+				try {
+					await axios.get('/auth/logout');
+					dispatch({ type: 'LOGOUT', payload: null });
+				} catch (error) {
+					console.error(error.message);
+				}
+			case false:
+				router.push('/login');
+		}
+	};
 
 	const toggler = e => {
 		setToggle(!toggle);
@@ -14,7 +32,7 @@ const Navbar: React.FC = () => {
 	};
 
 	return (
-		<nav className='flex flex-col pt-2 border'>
+		<nav className='flex flex-col pt-2 border rounded'>
 			{/* Navbar Main */}
 			<div className='flex flex-row items-center justify-between h-16 px-4 md:px-20'>
 				<div className='flex flex-row items-center space-x-4'>
@@ -30,12 +48,14 @@ const Navbar: React.FC = () => {
 						/>
 					</div>
 				</div>
-				<div className='flex flex-row items-center space-x-4'>
-					<Link href='/login'>
-						<a className='mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
-							<i className='fas fa-layer-group'></i>
-						</a>
-					</Link>
+				<div className='flex flex-row items-center space-x-2'>
+					{authenticated && (
+						<Link href='/login'>
+							<a className='mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
+								<i className='fas fa-layer-group'></i>
+							</a>
+						</Link>
+					)}
 					<Link href='/cart'>
 						<a className='mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
 							<i className='fas fa-shopping-cart'></i>
@@ -57,40 +77,46 @@ const Navbar: React.FC = () => {
 				)}
 			>
 				{/* Account Section */}
-				<div className='flex flex-row items-center px-4 py-2 space-x-4 hover:bg-gray-50'>
-					<Link href='/account'>
-						<img
-							src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
-							className='w-8 h-8 rounded-full cursor-pointer'
-						/>
-					</Link>
-					<div>
-						<h2 className='text-sm font-semibold text-gray-600 capitalize'>
-							Stewie Griffin
-						</h2>
-						<p className='text-xs text-gray-400'>stewie@gmail.com</p>
+				{authenticated && (
+					<div className='flex flex-row items-center px-4 py-2 space-x-4 hover:bg-gray-50'>
 						<Link href='/account'>
-							<a className='text-xs font-semibold text-blue-400 hover:underline'>
-								Manage your account
-							</a>
+							<img
+								src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+								className='w-8 h-8 rounded-full cursor-pointer'
+							/>
 						</Link>
+						<div>
+							<h2 className='text-sm font-semibold text-gray-600 capitalize'>
+								{user.name}
+							</h2>
+							<p className='text-xs text-gray-400'>{user.email}</p>
+							<Link href='/account'>
+								<a className='text-xs font-semibold text-blue-400 hover:underline'>
+									Manage your account
+								</a>
+							</Link>
+						</div>
 					</div>
-				</div>
+				)}
 
 				{/* Menu List */}
 				<div className='py-2 border border-l-0 border-r-0'>
-					<Link href='/account'>
-						<a className='flex flex-row items-center justify-start py-2 pl-4 space-x-4 text-sm text-gray-600 hover:bg-gray-100'>
-							<i className='text-gray-400 fas fa-user'></i>
-							<p className='text-xs font-medium'>Account</p>
-						</a>
-					</Link>
-					<Link href='/orders'>
-						<a className='flex flex-row items-center justify-start py-2 pl-4 space-x-4 text-sm text-gray-600 hover:bg-gray-100'>
-							<i className='text-gray-400 fas fa-shopping-bag'></i>
-							<p className='text-xs font-medium'>Purchases and Orders</p>
-						</a>
-					</Link>
+					{authenticated && (
+						<Fragment>
+							<Link href='/account'>
+								<a className='flex flex-row items-center justify-start py-2 pl-4 space-x-4 text-sm text-gray-600 hover:bg-gray-100'>
+									<i className='text-gray-400 fas fa-user'></i>
+									<p className='text-xs font-medium'>Account</p>
+								</a>
+							</Link>
+							<Link href='/orders'>
+								<a className='flex flex-row items-center justify-start py-2 pl-4 space-x-4 text-sm text-gray-600 hover:bg-gray-100'>
+									<i className='text-gray-400 fas fa-shopping-bag'></i>
+									<p className='text-xs font-medium'>Purchases and Orders</p>
+								</a>
+							</Link>
+						</Fragment>
+					)}
 					<Link href='/'>
 						<a className='flex flex-row items-center justify-start py-2 pl-4 space-x-4 text-sm text-gray-600 hover:bg-gray-100'>
 							<i className='text-gray-400 fas fa-question'></i>
@@ -106,9 +132,19 @@ const Navbar: React.FC = () => {
 				</div>
 
 				{/* Login / Logout */}
-				<button className='flex flex-row items-center justify-start w-full py-4 pl-4 space-x-4 text-sm text-gray-600 hover:bg-gray-100'>
-					<i className='text-gray-400 fas fa-sign-out-alt'></i>
-					<p className='text-xs font-medium'>Sign Out</p>
+				<button
+					onClick={e => handleAuth(e)}
+					className='flex flex-row items-center justify-start w-full py-4 pl-4 space-x-4 text-sm text-gray-600 hover:bg-gray-100'
+				>
+					{authenticated ? (
+						<i className='text-gray-400 fas fa-sign-out-alt'></i>
+					) : (
+						<i className='text-gray-400 fas fa-sign-in-alt'></i>
+					)}
+
+					<p className='text-xs font-medium'>
+						Sign {authenticated ? 'Out' : 'In'}
+					</p>
 				</button>
 			</div>
 		</nav>
