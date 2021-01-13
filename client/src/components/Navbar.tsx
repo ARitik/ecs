@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
 	};
 
 	return (
-		<nav className='flex flex-col pt-2 border rounded'>
+		<nav className='flex flex-col pt-2 rounded'>
 			{/* Navbar Main */}
 			<div className='flex flex-row items-center justify-between h-16 px-4 md:px-12'>
 				<div className='flex flex-row items-center space-x-4'>
