@@ -36,9 +36,11 @@ const Navbar: React.FC = () => {
 			{/* Navbar Main */}
 			<div className='flex flex-row items-center justify-between h-16 px-4 md:px-12'>
 				<div className='flex flex-row items-center space-x-4'>
-					<h1 className='text-sm font-bold tracking-widest text-gray-600 uppercase'>
-						Biblio
-					</h1>
+					<Link href='/'>
+						<a className='text-sm font-bold tracking-widest text-gray-600 uppercase'>
+							Biblio
+						</a>
+					</Link>
 					<div className='flex items-center py-2 pl-2 text-gray-400 border rounded w-52 bg-gray-50'>
 						<i className='fas fa-search'></i>
 						<input
@@ -48,25 +50,45 @@ const Navbar: React.FC = () => {
 						/>
 					</div>
 				</div>
-				<div className='flex flex-row items-center space-x-2'>
+				<div className='flex flex-row items-center space-x-4'>
 					{authenticated && (
 						<Link href='/login'>
 							<a className='mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
 								<i className='fas fa-layer-group'></i>
+								<p className='hidden ml-1 text-xs md:inline-block'>Orders</p>
 							</a>
 						</Link>
 					)}
 					<Link href='/cart'>
 						<a className='mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
 							<i className='fas fa-shopping-cart'></i>
+							<p className='hidden ml-1 text-xs md:inline-block'>Cart</p>
 						</a>
 					</Link>
 					<i
-						className='mt-2 text-gray-400 cursor-pointer md:pl-6 fas fa-user'
+						className='mt-2 text-gray-400 cursor-pointer md:pl-6 fas fa-bars'
 						onClick={e => toggler(e)}
 					></i>
 				</div>
 			</div>
+			<div className='flex flex-row items-center justify-between h-12 px-4 text-xs font-semibold bg-gray-800 md:px-12 text-gray-50'>
+				<div className='flex flex-row space-x-4 text-xs'>
+					<Link href='/deals'>
+						<a className='hover:underline'>Today's Deals</a>
+					</Link>
+					<Link href='/orders'>
+						<a className='hover:underline'>Orders</a>
+					</Link>
+					<Link href='/help'>
+						<a className='hover:underline'>Help</a>
+					</Link>
+				</div>
+				<h1 className='cursor-pointer hover:underline'>
+					Biblio's response to{' '}
+					<span className='font-bold text-yellow-500 uppercase'>COVID-19</span>
+				</h1>
+			</div>
+
 			{/* Menu On Toggle */}
 			<div
 				className={classNames(

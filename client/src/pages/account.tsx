@@ -41,7 +41,7 @@ export default function account() {
 						Review your prior purchases with us and explore new reads on Biblio.
 					</h2>
 					<p className='pt-4 text-sm font-medium text-gray-500'>
-						Signed in as stewie@gmail.com
+						Signed in as {user.email}
 					</p>
 				</div>
 				<button
