@@ -27,10 +27,11 @@ model Product {
   @@map(name: "products")
   id Int @default(autoincrement()) @id
   pid String @default(uuid()) @unique
-  name String?
-  description String
-  image String
-  stock Boolean 
+  name String
+  description String?
+  image String?
+  stock Boolean? 
+  category String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }

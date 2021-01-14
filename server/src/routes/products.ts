@@ -2,19 +2,18 @@ import { Request, Response, Router } from 'express';
 import prisma from '../middleware/prisma';
 
 const createProduct = async (req: Request, res: Response) => {
-	const { name, description, image, stock } = req.body;
+	const { name, category } = req.body;
 	try {
-		const constructProduct = {};
-
-		const product = await prisma.product.create({
-			data: {
-				name,
-				description,
-				image,
-				stock,
-			},
+		if (!name) return res.status(400).json({ name: 'Name cannot be empty.' });
+		if (!category)
+			return res.status(400).json({ category: 'Book must have a category.' });
+		//VALIDATION CHECK FOR SINGLE NON-NULLABLE ATTRIBUTE
+		console.log(req.body);
+		const newProduct = await prisma.product.create({
+			data: req.body,
 		});
-		res.send(product);
+		console.log(newProduct, 'Product Creation Successful');
+		return res.json(newProduct);
 	} catch (error) {
 		res.status(500).json({ error: 'Something went wrong!' });
 	}

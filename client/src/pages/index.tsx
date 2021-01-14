@@ -59,6 +59,19 @@ export default function Home() {
 						</p>
 					</div>
 				</div>
+				<div className='flex flex-row items-center justify-between w-full p-12 bg-blue-50 h-72'>
+					<div className='flex flex-col h-full space-y-2 w-72'>
+						<h1 className='text-4xl font-bold'>Restock your Library.</h1>
+						<p className='font-semibold text-blue-400 text-md'>
+							Shop for books , both old and new.
+						</p>
+					</div>
+				</div>
+				<div className='flex flex-row flex-wrap items-center justify-center w-full pt-4 space-y-4 md:justify-between h-104'>
+					<div className='h-full bg-gray-100 w-96'></div>
+					<div className='h-full bg-gray-100 w-96'></div>
+					<div className='h-full bg-gray-100 w-96'></div>
+				</div>
 			</div>
 		</div>
 	);

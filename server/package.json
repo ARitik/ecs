@@ -11,7 +11,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@prisma/client": "^2.13.1",
+		"@prisma/client": "^2.14.0",
 		"bcrypt": "^5.0.0",
 		"cookie": "^0.4.1",
 		"cookie-parser": "^1.4.5",
@@ -22,7 +22,7 @@
 		"jsonwebtoken": "^8.5.1"
 	},
 	"devDependencies": {
-		"@prisma/cli": "^2.13.1",
+		"@prisma/cli": "^2.14.0",
 		"@types/bcrypt": "^3.0.0",
 		"@types/cookie": "^0.4.0",
 		"@types/cookie-parser": "^1.4.2",
