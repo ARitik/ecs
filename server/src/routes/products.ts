@@ -1,4 +1,5 @@
 import { Request, Response, Router } from 'express';
+import { isArray } from 'util';
 import prisma from '../middleware/prisma';
 
 const createProduct = async (req: Request, res: Response) => {
@@ -20,22 +21,50 @@ const createProduct = async (req: Request, res: Response) => {
 };
 
 const getProducts = async (req: Request, res: Response) => {
+	let productQuery = {};
+	//This is an awful fix. I am ashamed of myself
+	//Typescript is a pain in the ass
+	// TODO: Investigate type errors and figure out why the switch case is leaky
+	if (req.query.num) {
+		let num: number;
+		if (req.query.num === '10') {
+			num = 10;
+		} else {
+			num = 20;
+		}
+		productQuery['take'] = num;
+	}
+
+	productQuery['orderBy'] = { createdAt: 'desc' };
 	try {
-		const products: Object[] = await prisma.product.findMany();
+		const products: Object[] = await prisma.product.findMany(productQuery);
 		if (products.length == 0) {
 			res.send({ products: 'No Products Found!' });
 		}
 		res.send(products);
-	} catch (error) {}
+	} catch (error) {
+		res.status(500).json({ error: 'Something went wrong!' });
+	}
+};
+
+const getProductById = async (req: Request, res: Response) => {
+	const id = req.params.id;
+	try {
+		const product = await prisma.product.findUnique({
+			where: { pid: id },
+		});
+		res.json(product);
+	} catch (error) {
+		res.status(500).json({ error: 'Something went wrong!' });
+	}
 };
 
 // const deleteProduct = params => {};
-
-// const getProductById = params => {};
 
 const router = Router();
 
 router.post('/products', createProduct);
 router.get('/products', getProducts);
+router.get('/products/:id', getProductById);
 
 export default router;
