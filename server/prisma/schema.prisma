@@ -40,9 +40,8 @@ model Order {
   @@map(name: "orders")
   id Int @default(autoincrement()) @id
   oid String @default(uuid()) @unique
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  products Product[]
+  userId String
+  user User @relation(fields: [userId], references: [uid])
   status OrderStatus @default(RECIEVED)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -60,3 +59,5 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
 }
+
+// TODO: Many Products to One Order

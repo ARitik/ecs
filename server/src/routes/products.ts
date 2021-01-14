@@ -1,5 +1,4 @@
 import { Request, Response, Router } from 'express';
-import { isArray } from 'util';
 import prisma from '../middleware/prisma';
 
 const createProduct = async (req: Request, res: Response) => {
