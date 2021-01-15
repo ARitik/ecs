@@ -32,6 +32,8 @@ model Product {
   image String?
   stock Boolean? 
   category String
+  orderId String?
+  order Order? @relation(fields: [orderId],references: [oid])
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }
@@ -40,6 +42,7 @@ model Order {
   @@map(name: "orders")
   id Int @default(autoincrement()) @id
   oid String @default(uuid()) @unique
+  products Product[]
   userId String
   user User @relation(fields: [userId], references: [uid])
   status OrderStatus @default(RECIEVED)

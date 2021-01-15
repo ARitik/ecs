@@ -6,9 +6,13 @@ const createOrder = async (req: Request, res: Response) => {
 	const { productIds } = req.body;
 	const { uid } = res.locals.user;
 	try {
-		const products = await prisma.product.findMany({
-			where: {},
+		const newOrder = await prisma.order.create({
+			data: {
+				user: uid,
+				productIds,
+			},
 		});
+		return res.json(newOrder);
 	} catch (error) {
 		return res.status(500).json({ error: 'Something went wrong!' });
 	}
