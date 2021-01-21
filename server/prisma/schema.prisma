@@ -32,8 +32,6 @@ model Product {
   image String?
   stock Boolean? 
   category String
-  orderId String?
-  order Order? @relation(fields: [orderId],references: [oid])
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }
@@ -42,7 +40,7 @@ model Order {
   @@map(name: "orders")
   id Int @default(autoincrement()) @id
   oid String @default(uuid()) @unique
-  products Product[]
+  products Json[] // Had to use Json[] instead of Product[]. One to N relations failed for optional attributes.
   userId String
   user User @relation(fields: [userId], references: [uid])
   status OrderStatus @default(RECIEVED)
@@ -63,4 +61,4 @@ enum OrderStatus {
   CANCELLED
 }
 
-// TODO: Many Products to One Order
+// NOTE: Removed One to Many relations between products and users. Creates Unecessary linking problems for optional attributes. Needs Inspection
