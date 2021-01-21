@@ -1,4 +1,7 @@
+import { useAuthState } from '../context/auth';
+
 const Banner: React.FC = params => {
+	const { authenticated, user } = useAuthState();
 	return (
 		<div className='bg-white'>
 			<div
@@ -8,9 +11,11 @@ const Banner: React.FC = params => {
 				}}
 			>
 				<div className='flex flex-col items-start justify-center w-full space-y-4 md:space-y-2 md:items-center'>
-					<h1 className='text-4xl font-bold tracking-tight text-gray-100'>
-						Hello , Stewie
-					</h1>
+					{authenticated && (
+						<h1 className='text-4xl font-bold tracking-tight text-gray-100 capitalize'>
+							Hello {user.name}
+						</h1>
+					)}
 					<p className='text-sm text-gray-300 font-semi-bold hover:underline hover:text-white'>
 						"The world always seems brighter when you've just made something
 						that wasn't there before." - Neil Gaiman{' '}

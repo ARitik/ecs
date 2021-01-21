@@ -1,4 +1,18 @@
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
 const MainCarousel: React.FC = params => {
+	const [products, setProducts] = useState([{}]);
+	const fetchProducts = async () => {
+		const response = await axios.get('/products?num=2');
+
+		console.log(response.data);
+	};
+
+	useEffect(() => {
+		fetchProducts();
+	}, []);
+
 	return (
 		<div className='flex flex-row items-center justify-between w-full p-12 bg-blue-50 h-72'>
 			<div className='flex flex-col h-full space-y-2 w-72'>

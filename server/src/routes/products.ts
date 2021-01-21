@@ -21,16 +21,11 @@ const createProduct = async (req: Request, res: Response) => {
 
 const getProducts = async (req: Request, res: Response) => {
 	let productQuery = {};
-	//This is an awful fix. I am ashamed of myself
-	//Typescript is a pain in the ass
-	// TODO: Investigate type errors and figure out why the switch case is leaky
-	if (req.query.num) {
-		let num: number;
-		if (req.query.num === '10') {
-			num = 10;
-		} else {
-			num = 20;
-		}
+	let query: any = req.query.num;
+
+	if (query) {
+		let num: number = parseInt(query);
+		console.log(num);
 		productQuery['take'] = num;
 	}
 
