@@ -28,6 +28,7 @@ model Product {
   id Int @default(autoincrement()) @id
   pid String @default(uuid()) @unique
   name String
+  author String
   description String?
   image String?
   stock Boolean? 

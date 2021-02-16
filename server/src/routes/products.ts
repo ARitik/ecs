@@ -2,9 +2,11 @@ import { Request, Response, Router } from 'express';
 import prisma from '../middleware/prisma';
 
 const createProduct = async (req: Request, res: Response) => {
-	const { name, category } = req.body;
+	const { name, category, author } = req.body;
 	try {
 		if (!name) return res.status(400).json({ name: 'Name cannot be empty.' });
+		if (!author)
+			return res.status(400).json({ author: 'Author cannot be empty.' });
 		if (!category)
 			return res.status(400).json({ category: 'Book must have a category.' });
 		//VALIDATION CHECK FOR SINGLE NON-NULLABLE ATTRIBUTE
@@ -15,6 +17,7 @@ const createProduct = async (req: Request, res: Response) => {
 		console.log(newProduct, 'Product Creation Successful');
 		return res.json(newProduct);
 	} catch (error) {
+		console.log(error.message);
 		res.status(500).json({ error: 'Something went wrong!' });
 	}
 };
@@ -25,7 +28,6 @@ const getProducts = async (req: Request, res: Response) => {
 
 	if (query) {
 		let num: number = parseInt(query);
-		console.log(num);
 		productQuery['take'] = num;
 	}
 

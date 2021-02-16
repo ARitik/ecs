@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 
 const MainCarousel: React.FC = params => {
 	const [products, setProducts] = useState([{}]);
-	const fetchProducts = async () => {
-		const response = await axios.get('/products?num=2');
+	// const fetchProducts = async () => {
+	// 	const response = await axios.get('/products?num=2');
 
-		console.log(response.data);
-	};
+	// 	console.log(response.data);
+	// };
 
-	useEffect(() => {
-		fetchProducts();
-	}, []);
+	// useEffect(() => {
+	// 	fetchProducts();
+	// }, []);
 
 	return (
 		<div className='flex flex-row items-center justify-between w-full p-12 bg-blue-50 h-72'>

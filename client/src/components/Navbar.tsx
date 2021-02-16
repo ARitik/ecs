@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { useAuthState, useAuthDispatch } from '../context/auth';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
@@ -11,6 +11,21 @@ const Navbar: React.FC = () => {
 	const [toggle, setToggle] = useState(true);
 	const dispatch = useAuthDispatch();
 	const { authenticated, user } = useAuthState();
+
+	useEffect(() => {
+		if (!authenticated) {
+			tryLogInOnLoad();
+		}
+	}, []);
+
+	const tryLogInOnLoad = async () => {
+		try {
+			const res = await axios.get('/auth/me');
+			dispatch({ type: 'LOGIN', payload: res.data });
+		} catch (error) {
+			console.log(error.message);
+		}
+	};
 
 	const handleAuth = async e => {
 		switch (authenticated) {
@@ -73,7 +88,7 @@ const Navbar: React.FC = () => {
 			</div>
 			<div className='flex flex-row items-center justify-between h-12 px-4 text-xs font-semibold bg-gray-800 md:px-12 text-gray-50'>
 				<div className='flex flex-row space-x-4 text-xs'>
-					<Link href='/deals'>
+					<Link href='/products/deals'>
 						<a className='hover:underline'>Today's Deals</a>
 					</Link>
 					<Link href='/orders'>
