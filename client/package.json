@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.2.2",
+    "@stripe/stripe-js": "^1.12.1",
     "autoprefixer": "^10.1.0",
     "axios": "^0.21.1",
     "dayjs": "^1.10.3",
@@ -15,6 +17,7 @@
     "postcss": "^8.2.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "stripe": "^8.135.0",
     "tailwindcss": "^2.0.2"
   },
   "devDependencies": {

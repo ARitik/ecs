@@ -8,6 +8,7 @@ import cors from 'cors';
 import authRoutes from './routes/auth';
 import productRoutes from './routes/products';
 import orderRoutes from './routes/orders';
+import stripeRoutes from './routes/stripe';
 
 dotenv.config();
 
@@ -58,6 +59,7 @@ app.get('/', (_, res: Response) => res.send('Hello World'));
 app.use('/api/auth', authRoutes);
 app.use('/api', productRoutes);
 app.use('/api', orderRoutes);
+app.use('/api', stripeRoutes);
 
 app.listen(PORT || 5000, () => {
 	console.log(`Server running at http://localhost:${PORT}`);

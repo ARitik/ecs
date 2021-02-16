@@ -1,6 +1,8 @@
 import { useCartState, useCartDispatch } from '../context/cart';
 import { useRouter } from 'next/router';
 import { useAuthState } from '../context/auth';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
 import Link from 'next/link';
 
 export default function Cart() {
@@ -9,9 +11,26 @@ export default function Cart() {
 	const dispatch = useCartDispatch();
 	const router = useRouter();
 
-	const handlePayment = () => {
+	const stripePromise = loadStripe(
+		process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+	);
+
+	const handlePayment = async () => {
 		if (!authenticated) {
 			router.push('/login');
+		}
+		window.localStorage.setItem('order', products);
+		const stripe = await stripePromise;
+		const response = await axios.post('/create-checkout-session', { products });
+		const session = await response.data;
+		const result = await stripe.redirectToCheckout({
+			sessionId: session.id,
+		});
+		if (result.error) {
+			// If `redirectToCheckout` fails due to a browser or network
+			// error, display the localized error message to your customer
+			// using `result.error.message`.
+			console.log(result.error.message);
 		}
 	};
 
