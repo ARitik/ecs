@@ -16,4 +16,6 @@ export interface Product {
 	createdAt: string;
 	updatedAt: string;
 	pid: string;
+	id: string;
+	price: number;
 }

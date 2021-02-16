@@ -5,10 +5,14 @@ import ProductCard from '../../components/ProductCard';
 
 const Deals = ({ products }) => {
 	return (
-		<div className='container flex flex-row flex-wrap justify-center px-8 py-16 mx-auto md:justify-start'>
+		<div className='flex flex-row flex-wrap justify-center px-16 mx-auto space-x-0 space-y-8 md:space-x-8 md:justify-between'>
+			<h1 className='w-full p-2 px-20 mt-12 text-4xl font-bold'>
+				Today's Deals
+			</h1>
 			{products.map(product => {
 				return (
 					<ProductCard
+						id={product.id}
 						key={product.id}
 						image={product.image}
 						name={product.name}
@@ -18,6 +22,7 @@ const Deals = ({ products }) => {
 						createdAt={product.createdAt}
 						updatedAt={product.updatedAt}
 						stock={product.stock}
+						price={product.price}
 					/>
 				);
 			})}

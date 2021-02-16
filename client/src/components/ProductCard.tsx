@@ -8,9 +8,10 @@ const ProductCard: React.FC<Product> = ({
 	image,
 	stock,
 	pid,
+	price,
 }) => {
 	return (
-		<div className='flex flex-col items-center justify-start p-4 pt-6 duration-200 transform bg-white shadow-xl w-72 hover:-translate-y-2 rounded-xl'>
+		<div className='flex flex-col items-center justify-start p-4 pt-6 duration-200 transform bg-white shadow-xl w-80 hover:-translate-y-2 rounded-xl'>
 			<Link href={`/products/${pid}`}>
 				<img
 					src={image}
@@ -24,7 +25,7 @@ const ProductCard: React.FC<Product> = ({
 			<p className='text-xs font-light tracking-tight text-gray-400 capitalize'>
 				{author}
 			</p>
-			<p className='pt-2 font-bold text-gray-800 text-md'>$12.99</p>
+			<p className='pt-2 font-bold text-gray-800 text-md'>₹{price}</p>
 			{stock ? (
 				<p className='flex flex-row items-center justify-center p-2 mt-2 text-xs font-semibold text-gray-800 bg-gray-100 rounded-full '>
 					<div className='w-1 h-1 mr-1 bg-green-500 rounded-full'></div>

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React, { useState, Fragment, useEffect } from 'react';
 import { useAuthState, useAuthDispatch } from '../context/auth';
+import { useCartState } from '../context/cart';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -11,8 +12,10 @@ const Navbar: React.FC = () => {
 	const [toggle, setToggle] = useState(true);
 	const dispatch = useAuthDispatch();
 	const { authenticated, user } = useAuthState();
+	const { total } = useCartState();
 
 	useEffect(() => {
+		console.log(document.cookie);
 		if (!authenticated) {
 			tryLogInOnLoad();
 		}
@@ -65,23 +68,26 @@ const Navbar: React.FC = () => {
 						/>
 					</div>
 				</div>
-				<div className='flex flex-row items-center space-x-4'>
+				<div className='flex flex-row items-center space-x-2'>
 					{authenticated && (
 						<Link href='/login'>
-							<a className='mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
-								<i className='fas fa-layer-group'></i>
-								<p className='hidden ml-1 text-xs md:inline-block'>Orders</p>
+							<a className='flex flex-row items-center justify-center mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
+								<i className='text-lg fas fa-layer-group'></i>
 							</a>
 						</Link>
 					)}
 					<Link href='/cart'>
-						<a className='mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
+						<a className='flex flex-row items-center mt-2 space-x-1 text-lg font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
 							<i className='fas fa-shopping-cart'></i>
-							<p className='hidden ml-1 text-xs md:inline-block'>Cart</p>
+							{total != 0 && (
+								<div className='duration-200 scale-105 px-1.5 transform -translate-x-3 -translate-y-2 text-xs text-white bg-gray-800 rounded-full'>
+									{total}
+								</div>
+							)}
 						</a>
 					</Link>
 					<i
-						className='mt-2 text-gray-400 cursor-pointer md:pl-6 fas fa-bars'
+						className='mt-2 text-lg text-gray-400 cursor-pointer md:pl-2 fas fa-bars'
 						onClick={e => toggler(e)}
 					></i>
 				</div>

@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 
 import axios from 'axios';
 import { AuthProvider } from '../context/auth';
+import { CartProvider } from '../context/cart';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 axios.defaults.withCredentials = true;
@@ -17,8 +18,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const authRoute = authRoutes.includes(pathname);
 	return (
 		<AuthProvider>
-			{!authRoute && <Navbar />}
-			<Component {...pageProps} />
+			<CartProvider>
+				{!authRoute && <Navbar />}
+				<Component {...pageProps} />
+			</CartProvider>
 		</AuthProvider>
 	);
 }

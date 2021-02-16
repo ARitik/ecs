@@ -10,11 +10,9 @@ const createProduct = async (req: Request, res: Response) => {
 		if (!category)
 			return res.status(400).json({ category: 'Book must have a category.' });
 		//VALIDATION CHECK FOR SINGLE NON-NULLABLE ATTRIBUTE
-		console.log(req.body);
 		const newProduct = await prisma.product.create({
 			data: req.body,
 		});
-		console.log(newProduct, 'Product Creation Successful');
 		return res.json(newProduct);
 	} catch (error) {
 		console.log(error.message);

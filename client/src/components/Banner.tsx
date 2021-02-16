@@ -1,9 +1,10 @@
 import { useAuthState } from '../context/auth';
+import Link from 'next/link';
 
 const Banner: React.FC = params => {
 	const { authenticated, user } = useAuthState();
 	return (
-		<div className='bg-white'>
+		<div className='bg-white '>
 			<div
 				className='flex items-center justify-start object-top w-full px-4 bg-cover md:justify-center h-96'
 				style={{

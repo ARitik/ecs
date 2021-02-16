@@ -31,7 +31,8 @@ model Product {
   author String
   description String?
   image String?
-  stock Boolean? 
+  stock Boolean?
+  price Int 
   category String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
