@@ -31,8 +31,6 @@ Registered user's passwords are hashed before being entered into the Database. T
 
 The `auth` middleware handles _token-creation_ using the `jsonwebtoken` library.
 
-[Read my article about this topic...]('https://dev.to/aritik/writing-a-basic-authentication-api-with-express-and-mongodb-1-j8')
-
 The Client stores the user's data in its Global state (Context API) and queries the `/api/auth/me` route to maintain the session on page reload. This is done with the help of a `Cookie`.
 
 **Sign Up**
