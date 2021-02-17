@@ -14,6 +14,12 @@ const Navbar: React.FC = () => {
 	const { authenticated, user } = useAuthState();
 	const { total } = useCartState();
 
+	var orderLink = '/login';
+
+	if (authenticated) {
+		orderLink = `/orders/${user.uid}`;
+	}
+
 	useEffect(() => {
 		console.log(document.cookie);
 		if (!authenticated) {
@@ -70,7 +76,7 @@ const Navbar: React.FC = () => {
 				</div>
 				<div className='flex flex-row items-center space-x-2'>
 					{authenticated && (
-						<Link href='/login'>
+						<Link href={orderLink}>
 							<a className='flex flex-row items-center justify-center mt-2 text-sm font-semibold text-gray-400 transition duration-200 hover:text-gray-600'>
 								<i className='text-lg fas fa-layer-group'></i>
 							</a>
@@ -97,7 +103,7 @@ const Navbar: React.FC = () => {
 					<Link href='/products/deals'>
 						<a className='hover:underline'>Today's Deals</a>
 					</Link>
-					<Link href='/orders'>
+					<Link href={orderLink}>
 						<a className='hover:underline'>Orders</a>
 					</Link>
 					<Link href='/help'>
@@ -152,7 +158,7 @@ const Navbar: React.FC = () => {
 									<p className='text-xs font-medium'>Account</p>
 								</a>
 							</Link>
-							<Link href='/orders'>
+							<Link href={orderLink}>
 								<a className='flex flex-row items-center justify-start py-2 pl-4 space-x-4 text-sm text-gray-600 hover:bg-gray-100'>
 									<i className='text-gray-400 fas fa-shopping-bag'></i>
 									<p className='text-xs font-medium'>Purchases and Orders</p>

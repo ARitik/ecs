@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import Link from 'next/link';
 
-import axios from 'axios';
 export default function Success() {
 	return (
 		<div>
@@ -8,9 +7,11 @@ export default function Success() {
 				<h1 className='text-4xl font-semibold text-gray-800'>
 					Purchase Succesful
 				</h1>
-				<p className='text-xs text-blue-500 cursor-pointer hover:underline'>
-					Download your invoice here.
-				</p>
+				<Link href='/'>
+					<a className='text-xs text-blue-500 cursor-pointer hover:underline'>
+						Go to Home
+					</a>
+				</Link>
 			</div>
 		</div>
 	);

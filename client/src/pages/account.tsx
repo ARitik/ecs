@@ -100,7 +100,7 @@ export default function account() {
 			<div className='flex flex-row items-baseline justify-between w-full pb-4 mt-6 space-x-6 md:w-96'>
 				<h2 className='text-sm font-semibold'>Orders</h2>
 				<div>
-					<Link href='/orders'>
+					<Link href={`/orders/${user.uid}`}>
 						<a className='text-xs font-medium text-blue-400 hover:underline'>
 							View your Orders
 						</a>
